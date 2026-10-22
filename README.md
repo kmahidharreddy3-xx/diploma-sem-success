@@ -1,1 +1,1 @@
-# diploma-sem-success
+diploma-sem-success
