@@ -4,161 +4,520 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="Free study planner, revision tracker, notes and practice quizzes for Diploma Computer Engineering students.">
 <title>Diploma Sem Success</title>
 <style>
 :root {
   color-scheme: dark;
-  --bg: #0b1020;
-  --card: #151d32;
-  --text: #f5f7ff;
-  --muted: #aab6d3;
-  --accent: #76a9ff;
+  --bg:#0b1020;
+  --card:#141e33;
+  --border:#293954;
+  --text:#f5f7ff;
+  --muted:#a9b8d3;
+  --accent:#85b5ff;
+  --green:#73e0b0;
 }
-* { box-sizing: border-box; }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
 body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font: 16px Arial, sans-serif;
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font:16px/1.6 system-ui,Arial,sans-serif;
 }
 header {
-  padding: 28px 18px;
-  background: linear-gradient(135deg,#172554,#312e81);
+  padding:32px 18px;
+  background:linear-gradient(135deg,#172554,#312e81,#164e63);
 }
-main { max-width: 850px; margin: auto; padding: 18px; }
-h1 { margin: 0 0 8px; }
-p { line-height: 1.6; }
-.muted { color: var(--muted); }
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-  gap: 14px;
+header, main, footer { width:100%; }
+.wrap { max-width:950px; margin:auto; }
+header h1 { font-size:clamp(27px,6vw,42px); margin:0; }
+header p { color:#e0eaff; }
+nav {
+  display:flex; gap:9px; flex-wrap:wrap;
+  padding:12px 18px;
+  background:#111a2d;
+  border-bottom:1px solid var(--border);
 }
+nav a {
+  color:var(--accent); text-decoration:none;
+  padding:7px 10px; border-radius:8px;
+}
+main { max-width:950px; margin:auto; padding:18px; }
+section { scroll-margin-top:15px; margin-bottom:22px; }
+h2 { font-size:23px; margin:0 0 12px; }
+h3 { margin:0 0 8px; font-size:18px; }
+p { overflow-wrap:anywhere; }
+.muted { color:var(--muted); }
 .card {
-  background: var(--card);
-  border: 1px solid #293653;
-  border-radius: 14px;
-  padding: 18px;
-  margin-bottom: 14px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:17px;
 }
-a { color: var(--accent); }
-button, input {
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #465678;
-  background: #202c46;
-  color: white;
-  font-size: 16px;
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));
+  gap:13px;
 }
-button { cursor: pointer; }
-input { width: 100%; margin: 8px 0; }
-label { display: block; margin: 12px 0; }
-footer { padding: 20px; text-align: center; }
+.subject { display:flex; flex-direction:column; gap:10px; }
+.subject .actions { margin-top:auto; display:flex; gap:10px; flex-wrap:wrap; }
+button, input, select {
+  font:inherit; color:var(--text);
+  background:#202e49;
+  border:1px solid #435777;
+  border-radius:9px;
+  padding:11px;
+}
+button { cursor:pointer; }
+button:hover { border-color:var(--accent); }
+input, select { width:100%; }
+input[type=checkbox], input[type=radio] { width:auto; }
+label { display:block; margin:10px 0; }
+a { color:var(--accent); }
+.btn { display:inline-block; text-decoration:none; }
+.primary { background:#244d89; }
+.small { font-size:14px; }
+.pill {
+  display:inline-block; border:1px solid var(--border);
+  border-radius:99px; padding:3px 9px;
+  color:var(--muted); font-size:12px;
+}
+.progress {
+  height:10px; border-radius:99px;
+  background:#293954; overflow:hidden;
+}
+.progress div { height:100%; background:var(--green); width:0; }
+.topic { border-top:1px solid var(--border); padding:12px 0; }
+.result { min-height:26px; color:var(--green); }
+footer {
+  padding:25px 18px; border-top:1px solid var(--border);
+  text-align:center; color:var(--muted);
+}
+button:focus-visible, a:focus-visible, input:focus-visible {
+  outline:2px solid var(--accent); outline-offset:3px;
+}
 </style>
 </head>
 <body>
 <header>
-  <h1>🎓 Diploma Sem Success</h1>
-  <p>SBTET Andhra Pradesh · C-23 · Computer Engineering</p>
-  <p>Study smart. Revise daily. Keep improving.</p>
+  <div class="wrap">
+    <p>🎓 FREE STUDENT LEARNING HUB</p>
+    <h1>Diploma Sem Success</h1>
+    <p>SBTET Andhra Pradesh · Computer Engineering · Semester 3 · C-23</p>
+    <p>Learn a little. Revise daily. Improve step by step.</p>
+    <a class="btn" href="#subjects">Explore subjects ↓</a>
+  </div>
 </header>
 
+<nav aria-label="Main navigation">
+  <a href="#subjects">Subjects</a>
+  <a href="#notes">Notes</a>
+  <a href="#planner">Study planner</a>
+  <a href="#tracker">Revision</a>
+  <a href="#quiz">Quiz</a>
+  <a href="#resources">Resources</a>
+</nav>
+
 <main>
-  <section class="card">
-    <h2>📚 Semester 3 Subjects</h2>
-    <div class="grid" id="subjects"></div>
-  </section>
+<section class="card">
+  <h2>👋 Welcome, Diploma student!</h2>
+  <p>Use this free website to organize your learning, revise concepts and practise basic questions.</p>
+  <div class="grid">
+    <div>
+      <p class="muted">Subjects revised</p>
+      <h3 id="summaryCount">0 / 5</h3>
+    </div>
+    <div>
+      <p class="muted">Quiz questions answered correctly</p>
+      <h3 id="summaryQuiz">0</h3>
+    </div>
+  </div>
+  <p class="small muted">Progress is stored in this browser on this device. It is not synced between students or phones.</p>
+</section>
 
-  <section class="card">
-    <h2>📅 Daily Study Planner</h2>
-    <label for="hours">Today's study goal (hours)</label>
-    <input id="hours" type="number" min="1" max="12" value="2">
-    <button id="makePlan">Create my plan</button>
-    <p id="plan" aria-live="polite"></p>
-  </section>
+<section id="subjects">
+  <h2>📚 Your Semester 3 subjects</h2>
+  <label for="search">Search subjects or topics</label>
+  <input id="search" placeholder="Try DBMS, stack, operating system..." autocomplete="off">
+  <div id="subjectList" class="grid" style="margin-top:14px"></div>
+  <p id="noResults" class="muted" hidden>No matching subjects found.</p>
+</section>
 
-  <section class="card">
-    <h2>✅ Revision Tracker</h2>
-    <p class="muted">Tick a subject after revising it. Progress stays in this browser.</p>
-    <div id="tracker"></div>
-    <p id="progress"></p>
-    <button id="reset">Reset checklist</button>
-  </section>
+<section id="notes" class="card">
+  <h2>📝 Beginner notes</h2>
+  <p class="muted">These are original introductory summaries, not a substitute for the current official syllabus or your lecturer's notes.</p>
+  <div id="notesList"></div>
+</section>
 
-  <section class="card">
-    <h2>🧠 Quick Practice</h2>
-    <p>Which data structure follows FIFO?</p>
-    <button id="queue">Queue</button>
-    <button id="stack">Stack</button>
-    <p id="quiz" aria-live="polite"></p>
-  </section>
+<section id="planner" class="card">
+  <h2>📅 Daily study planner</h2>
+  <label for="studyDate">Study date</label>
+  <input id="studyDate" type="date">
+  <label for="studyHours">Available study time (hours)</label>
+  <input id="studyHours" type="number" min="1" max="12" value="2">
+  <label for="priority">Subject to focus on</label>
+  <select id="priority"></select>
+  <button class="primary" id="createPlan">Create study plan</button>
+  <div id="planResult" aria-live="polite"></div>
+</section>
 
-  <section class="card">
-    <h2>🔗 Useful Links</h2>
-    <p><a href="https://sbtet.ap.gov.in/APSBTET/" target="_blank" rel="noopener">SBTET AP portal</a></p>
-    <p><a href="https://docs.github.com/en/pages/quickstart" target="_blank" rel="noopener">Free website publishing guide</a></p>
-    <p class="muted">Confirm the current syllabus and exam notices using your college or official board resources. Question-paper links may come from third-party sites.</p>
-  </section>
+<section id="tracker" class="card">
+  <h2>✅ Revision tracker</h2>
+  <p class="muted">Tick a subject when you have revised it. Untick it when you want to review it again.</p>
+  <div class="progress"><div id="progressBar"></div></div>
+  <p id="progressText">0% complete</p>
+  <div id="checklist"></div>
+  <button id="resetTracker">Reset revision progress</button>
+</section>
+
+<section id="quiz" class="card">
+  <h2>🧠 Practice quiz</h2>
+  <p class="muted">Original beginner questions. These are not official or predicted examination questions.</p>
+  <p id="questionCount"></p>
+  <h3 id="question"></h3>
+  <div id="answers"></div>
+  <p id="feedback" class="result" aria-live="polite"></p>
+  <button id="nextQuestion" class="primary">Next question</button>
+  <button id="restartQuiz">Restart quiz</button>
+</section>
+
+<section id="resources" class="card">
+  <h2>🔗 Study resources</h2>
+  <p><a href="https://sbtet.ap.gov.in/APSBTET/" target="_blank" rel="noopener noreferrer">SBTET Andhra Pradesh portal</a></p>
+  <p><a href="https://diet.edu.in/cmoon_pdf/21__dcme.pdf" target="_blank" rel="noopener noreferrer">C-23 curriculum reference PDF hosted by DIET</a></p>
+  <p class="small muted">Important: the available curriculum copy may not contain the complete Semester III syllabus. Confirm your syllabus and exam notices with your college or the current official SBTET portal.</p>
+  <h3>Previous-paper indexes</h3>
+  <p class="small muted">The following subject paper pages are from a third-party website, not the official board. Check the regulation, subject code and exam session before using any paper.</p>
+  <ul id="paperLinks"></ul>
+</section>
+
+<section class="card">
+  <h2>💡 Exam preparation tips</h2>
+  <ul>
+    <li>Study the topics listed in your current syllabus.</li>
+    <li>Practise writing answers without looking at notes.</li>
+    <li>Use previous papers to understand question formats, not to predict guaranteed questions.</li>
+    <li>Revise difficult concepts regularly and ask your lecturer when you get stuck.</li>
+    <li>Take breaks and get enough sleep before examinations.</li>
+  </ul>
+</section>
 </main>
 
-<footer class="muted">Made for Diploma students ❤️ · Free learning project</footer>
+<footer>
+  <p>Made for Diploma students ❤️</p>
+  <p class="small">Free learning project · Not affiliated with SBTET AP · No guaranteed marks</p>
+</footer>
 
 <script>
+"use strict";
+
 const subjects = [
-  "Engineering Mathematics-II",
-  "Digital Electronics",
-  "Operating Systems",
-  "Data Structures Through C",
-  "Database Management Systems (DBMS)"
+  {
+    code:"CM-301",
+    name:"Engineering Mathematics-II",
+    topics:"mathematics algebra calculus",
+    note:"Build confidence by writing each formula, understanding its conditions, and solving practice problems step by step. Verify the exact units in your current syllabus.",
+    paper:"https://www.manaresults.co.in/ap-sbtet/download.php?subcode=C23-CM-301"
+  },
+  {
+    code:"CM-302",
+    name:"Digital Electronics",
+    topics:"logic gates binary boolean electronics",
+    note:"Start with binary numbers, truth tables and basic logic gates. Practise drawing a truth table and checking each output systematically.",
+    paper:"https://www.manaresults.co.in/ap-sbtet/download.php?subcode=C23-CM-302"
+  },
+  {
+    code:"CM-303",
+    name:"Operating Systems",
+    topics:"process memory files operating system",
+    note:"An operating system manages computer resources and provides services to programs. Learn basic terms such as process, memory management, files and scheduling.",
+    paper:"https://www.manaresults.co.in/ap-sbtet/download.php?subcode=C23-CM-303"
+  },
+  {
+    code:"CM-304",
+    name:"Data Structures Through C",
+    topics:"array linked list stack queue sorting c programming",
+    note:"A data structure organizes data for use by a program. Learn arrays, linked lists, stacks and queues, then practise writing and tracing simple C programs.",
+    paper:"https://www.manaresults.co.in/ap-sbtet/download.php?subcode=C23-CM-304"
+  },
+  {
+    code:"CM-305",
+    name:"Database Management Systems",
+    topics:"dbms sql tables keys database",
+    note:"A DBMS helps store, organize and retrieve data. Learn tables, rows, columns, primary keys, relationships and basic SQL concepts.",
+    paper:"https://www.manaresults.co.in/ap-sbtet/download.php?subcode=C23-CM-305"
+  }
 ];
 
-document.getElementById("subjects").innerHTML = subjects.map(
-  (s, i) => `<article class="card">
-    <h3>${s}</h3>
-    <label><input type="checkbox" class="done" data-index="${i}">
-    Revised</label>
-  </article>`
-).join("");
+const quizQuestions = [
+  {
+    subject:"CM-301",
+    q:"What is the derivative of x²?",
+    options:["x","2x","x²","2"],
+    answer:1,
+    why:"Using the power rule, d(xⁿ)/dx = n·xⁿ⁻¹, so the derivative is 2x."
+  },
+  {
+    subject:"CM-302",
+    q:"What is the output of an AND gate when both inputs are 1?",
+    options:["0","1","Undefined","Depends on the clock"],
+    answer:1,
+    why:"An AND gate outputs 1 only when both inputs are 1."
+  },
+  {
+    subject:"CM-303",
+    q:"Which software manages hardware and provides services to applications?",
+    options:["Operating system","Text document","Image file","Calculator result"],
+    answer:0,
+    why:"The operating system manages hardware resources and supports applications."
+  },
+  {
+    subject:"CM-304",
+    q:"Which data structure follows FIFO?",
+    options:["Stack","Queue","Tree","Graph"],
+    answer:1,
+    why:"FIFO means First In, First Out, which is the queue principle."
+  },
+  {
+    subject:"CM-305",
+    q:"What is a primary key used for in a database table?",
+    options:["To identify each row uniquely","To colour the table","To shut down the database","To duplicate every row"],
+    answer:0,
+    why:"A primary key uniquely identifies each record in a table."
+  }
+];
 
-const checks = [...document.querySelectorAll(".done")];
-const saved = JSON.parse(localStorage.getItem("dss-revision") || "[]");
-checks.forEach((c, i) => c.checked = saved.includes(i));
+const $ = id => document.getElementById(id);
+
+function safeGet(key, fallback) {
+  try {
+    const value = localStorage.getItem(key);
+    return value === null ? fallback : JSON.parse(value);
+  } catch {
+    return fallback;
+  }
+}
+function safeSet(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); }
+  catch { /* Site still works if browser storage is unavailable. */ }
+}
+
+function makeElement(tag, text, className) {
+  const el = document.createElement(tag);
+  if (text !== undefined) el.textContent = text;
+  if (className) el.className = className;
+  return el;
+}
+
+function renderSubjects(filter = "") {
+  const list = $("subjectList");
+  list.replaceChildren();
+  const term = filter.trim().toLowerCase();
+  const matches = subjects.filter(s =>
+    (s.code + " " + s.name + " " + s.topics).toLowerCase().includes(term)
+  );
+
+  $("noResults").hidden = matches.length !== 0;
+
+  matches.forEach(s => {
+    const card = makeElement("article", undefined, "card subject");
+    card.append(makeElement("span", s.code, "pill"));
+    card.append(makeElement("h3", s.name));
+    card.append(makeElement("p", s.note, "small muted"));
+
+    const actions = makeElement("div", undefined, "actions");
+    const noteBtn = makeElement("button", "Read note");
+    noteBtn.onclick = () => {
+      $("notes").scrollIntoView();
+      const target = document.getElementById("note-" + s.code);
+      if (target) target.open = true;
+    };
+    const paperLink = makeElement("a", "Paper index ↗", "btn");
+    paperLink.href = s.paper;
+    paperLink.target = "_blank";
+    paperLink.rel = "noopener noreferrer";
+    actions.append(noteBtn, paperLink);
+    card.append(actions);
+    list.append(card);
+  });
+}
+
+function renderNotes() {
+  const list = $("notesList");
+  subjects.forEach(s => {
+    const details = document.createElement("details");
+    details.className = "topic";
+    details.id = "note-" + s.code;
+    const summary = makeElement("summary", s.code + " — " + s.name);
+    const p = makeElement("p", s.note);
+    const warning = makeElement("p",
+      "This is an introductory summary. Check your official syllabus for required topics.",
+      "small muted");
+    details.append(summary, p, warning);
+    list.append(details);
+  });
+}
+
+function renderPaperLinks() {
+  const list = $("paperLinks");
+  subjects.forEach(s => {
+    const li = document.createElement("li");
+    const a = makeElement("a", s.code + " — " + s.name);
+    a.href = s.paper;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    li.append(a);
+    list.append(li);
+  });
+}
+
+function renderChecklist() {
+  const list = $("checklist");
+  list.replaceChildren();
+  const saved = safeGet("dss-v2-revised", []);
+  subjects.forEach(s => {
+    const label = document.createElement("label");
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.checked = saved.includes(s.code);
+    input.addEventListener("change", () => {
+      let next = safeGet("dss-v2-revised", []);
+      next = next.filter(code => code !== s.code);
+      if (input.checked) next.push(s.code);
+      safeSet("dss-v2-revised", next);
+      updateProgress();
+    });
+    label.append(input, document.createTextNode(" " + s.code + " — " + s.name));
+    list.append(label);
+  });
+  updateProgress();
+}
 
 function updateProgress() {
-  const done = checks.filter(c => c.checked).length;
-  document.getElementById("progress").textContent =
-    `${done} of ${subjects.length} subjects revised`;
-  localStorage.setItem("dss-revision", JSON.stringify(
-    checks.map((c, i) => c.checked ? i : -1).filter(i => i >= 0)
-  ));
+  const saved = safeGet("dss-v2-revised", []);
+  const count = subjects.filter(s => saved.includes(s.code)).length;
+  const percent = Math.round(count / subjects.length * 100);
+  $("progressBar").style.width = percent + "%";
+  $("progressText").textContent = count + " of " + subjects.length + " subjects revised (" + percent + "%)";
+  $("summaryCount").textContent = count + " / " + subjects.length;
 }
-checks.forEach(c => c.addEventListener("change", updateProgress));
-updateProgress();
 
-document.getElementById("makePlan").onclick = () => {
-  const hours = Number(document.getElementById("hours").value);
+$("resetTracker").onclick = () => {
+  if (!confirm("Reset all revision checkboxes?")) return;
+  safeSet("dss-v2-revised", []);
+  renderChecklist();
+};
+
+subjects.forEach(s => {
+  const option = document.createElement("option");
+  option.value = s.code;
+  option.textContent = s.name;
+  $("priority").append(option);
+});
+
+$("createPlan").onclick = () => {
+  const hours = Number($("studyHours").value);
   if (!Number.isFinite(hours) || hours < 1 || hours > 12) {
-    document.getElementById("plan").textContent =
-      "Enter a goal between 1 and 12 hours.";
+    $("planResult").textContent = "Choose between 1 and 12 study hours.";
     return;
   }
-  document.getElementById("plan").textContent =
-    `Study ${Math.round(hours * 30)} minutes, take a short break, ` +
-    `then practise questions. Split your goal across topics and breaks.`;
+  const chosen = subjects.find(s => s.code === $("priority").value);
+  const minutes = Math.round(hours * 60);
+  const first = Math.round(minutes * 0.5);
+  const second = Math.round(minutes * 0.3);
+  const third = minutes - first - second;
+
+  const box = $("planResult");
+  box.replaceChildren();
+  box.append(makeElement("h3", "Your suggested " + minutes + "-minute plan"));
+  [
+    first + " min — Study " + chosen.name,
+    second + " min — Practise questions or write answers",
+    third + " min — Revise key points and review mistakes"
+  ].forEach(text => box.append(makeElement("p", "• " + text)));
+  box.append(makeElement("p",
+    "Take short breaks when needed. This is a suggested plan, not an official timetable.",
+    "small muted"));
+  safeSet("dss-v2-last-plan", {
+    date:$("studyDate").value,
+    hours,
+    subject:chosen.code
+  });
 };
 
-document.getElementById("queue").onclick = () => {
-  document.getElementById("quiz").textContent =
-    "Correct! A queue follows First In, First Out (FIFO).";
+$("studyDate").value = new Date().toLocaleDateString("en-CA");
+$("search").addEventListener("input", e => renderSubjects(e.target.value));
+
+let quizIndex = 0;
+let quizScore = 0;
+let answered = false;
+let quizOrder = [...quizQuestions];
+
+function renderQuestion() {
+  answered = false;
+  const item = quizOrder[quizIndex];
+  $("questionCount").textContent = "Question " + (quizIndex + 1) + " of " + quizOrder.length;
+  $("question").textContent = item.q;
+  $("feedback").textContent = "";
+  $("answers").replaceChildren();
+
+  item.options.forEach((option, index) => {
+    const button = makeElement("button", option);
+    button.style.display = "block";
+    button.style.width = "100%";
+    button.style.margin = "8px 0";
+    button.onclick = () => {
+      if (answered) return;
+      answered = true;
+      if (index === item.answer) {
+        quizScore++;
+        $("feedback").textContent = "Correct! " + item.why;
+      } else {
+        $("feedback").textContent = "Not quite. Correct answer: " +
+          item.options[item.answer] + ". " + item.why;
+      }
+      $("summaryQuiz").textContent = quizScore;
+      [...$("answers").children].forEach(b => b.disabled = true);
+    };
+    $("answers").append(button);
+  });
+  $("nextQuestion").textContent =
+    quizIndex === quizOrder.length - 1 ? "Finish quiz" : "Next question";
+}
+
+$("nextQuestion").onclick = () => {
+  if (!answered) {
+    $("feedback").textContent = "Choose an answer first.";
+    return;
+  }
+  if (quizIndex < quizOrder.length - 1) {
+    quizIndex++;
+    renderQuestion();
+  } else {
+    $("question").textContent = "Quiz complete!";
+    $("questionCount").textContent = "Score: " + quizScore + " / " + quizOrder.length;
+    $("answers").replaceChildren();
+    $("feedback").textContent = "Good effort! Review the explanations and try again.";
+    $("nextQuestion").disabled = true;
+  }
 };
-document.getElementById("stack").onclick = () => {
-  document.getElementById("quiz").textContent =
-    "Not this one. A stack follows LIFO; a queue follows FIFO.";
+
+$("restartQuiz").onclick = () => {
+  quizIndex = 0;
+  quizScore = 0;
+  $("summaryQuiz").textContent = "0";
+  $("nextQuestion").disabled = false;
+  quizOrder = [...quizQuestions];
+  renderQuestion();
 };
-document.getElementById("reset").onclick = () => {
-  checks.forEach(c => c.checked = false);
-  updateProgress();
-};
+
+renderSubjects();
+renderNotes();
+renderPaperLinks();
+renderChecklist();
+renderQuestion();
 </script>
 </body>
 </html>
