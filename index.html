@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diploma Sem Success</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #0b1020;
+  --card: #151d32;
+  --text: #f5f7ff;
+  --muted: #aab6d3;
+  --accent: #76a9ff;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px Arial, sans-serif;
+}
+header {
+  padding: 28px 18px;
+  background: linear-gradient(135deg,#172554,#312e81);
+}
+main { max-width: 850px; margin: auto; padding: 18px; }
+h1 { margin: 0 0 8px; }
+p { line-height: 1.6; }
+.muted { color: var(--muted); }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 14px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid #293653;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+a { color: var(--accent); }
+button, input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #465678;
+  background: #202c46;
+  color: white;
+  font-size: 16px;
+}
+button { cursor: pointer; }
+input { width: 100%; margin: 8px 0; }
+label { display: block; margin: 12px 0; }
+footer { padding: 20px; text-align: center; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🎓 Diploma Sem Success</h1>
+  <p>SBTET Andhra Pradesh · C-23 · Computer Engineering</p>
+  <p>Study smart. Revise daily. Keep improving.</p>
+</header>
+
+<main>
+  <section class="card">
+    <h2>📚 Semester 3 Subjects</h2>
+    <div class="grid" id="subjects"></div>
+  </section>
+
+  <section class="card">
+    <h2>📅 Daily Study Planner</h2>
+    <label for="hours">Today's study goal (hours)</label>
+    <input id="hours" type="number" min="1" max="12" value="2">
+    <button id="makePlan">Create my plan</button>
+    <p id="plan" aria-live="polite"></p>
+  </section>
+
+  <section class="card">
+    <h2>✅ Revision Tracker</h2>
+    <p class="muted">Tick a subject after revising it. Progress stays in this browser.</p>
+    <div id="tracker"></div>
+    <p id="progress"></p>
+    <button id="reset">Reset checklist</button>
+  </section>
+
+  <section class="card">
+    <h2>🧠 Quick Practice</h2>
+    <p>Which data structure follows FIFO?</p>
+    <button id="queue">Queue</button>
+    <button id="stack">Stack</button>
+    <p id="quiz" aria-live="polite"></p>
+  </section>
+
+  <section class="card">
+    <h2>🔗 Useful Links</h2>
+    <p><a href="https://sbtet.ap.gov.in/APSBTET/" target="_blank" rel="noopener">SBTET AP portal</a></p>
+    <p><a href="https://docs.github.com/en/pages/quickstart" target="_blank" rel="noopener">Free website publishing guide</a></p>
+    <p class="muted">Confirm the current syllabus and exam notices using your college or official board resources. Question-paper links may come from third-party sites.</p>
+  </section>
+</main>
+
+<footer class="muted">Made for Diploma students ❤️ · Free learning project</footer>
+
+<script>
+const subjects = [
+  "Engineering Mathematics-II",
+  "Digital Electronics",
+  "Operating Systems",
+  "Data Structures Through C",
+  "Database Management Systems (DBMS)"
+];
+
+document.getElementById("subjects").innerHTML = subjects.map(
+  (s, i) => `<article class="card">
+    <h3>${s}</h3>
+    <label><input type="checkbox" class="done" data-index="${i}">
+    Revised</label>
+  </article>`
+).join("");
+
+const checks = [...document.querySelectorAll(".done")];
+const saved = JSON.parse(localStorage.getItem("dss-revision") || "[]");
+checks.forEach((c, i) => c.checked = saved.includes(i));
+
+function updateProgress() {
+  const done = checks.filter(c => c.checked).length;
+  document.getElementById("progress").textContent =
+    `${done} of ${subjects.length} subjects revised`;
+  localStorage.setItem("dss-revision", JSON.stringify(
+    checks.map((c, i) => c.checked ? i : -1).filter(i => i >= 0)
+  ));
+}
+checks.forEach(c => c.addEventListener("change", updateProgress));
+updateProgress();
+
+document.getElementById("makePlan").onclick = () => {
+  const hours = Number(document.getElementById("hours").value);
+  if (!Number.isFinite(hours) || hours < 1 || hours > 12) {
+    document.getElementById("plan").textContent =
+      "Enter a goal between 1 and 12 hours.";
+    return;
+  }
+  document.getElementById("plan").textContent =
+    `Study ${Math.round(hours * 30)} minutes, take a short break, ` +
+    `then practise questions. Split your goal across topics and breaks.`;
+};
+
+document.getElementById("queue").onclick = () => {
+  document.getElementById("quiz").textContent =
+    "Correct! A queue follows First In, First Out (FIFO).";
+};
+document.getElementById("stack").onclick = () => {
+  document.getElementById("quiz").textContent =
+    "Not this one. A stack follows LIFO; a queue follows FIFO.";
+};
+document.getElementById("reset").onclick = () => {
+  checks.forEach(c => c.checked = false);
+  updateProgress();
+};
+</script>
+</body>
+</html>
